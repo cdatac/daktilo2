@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daktilo2 - Pazar Eki</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;600&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #000;
+            --accent-color: #b11f24;
+            --bg-color: #f9f9f9;
+            --border-color: #333;
+        }
+
+        @media print {
+            @page {
+                size: A4;
+                margin: 0;
+            }
+
+            body {
+                background-color: white !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+
+            .page-container {
+                width: 100% !important;
+                max-width: none !important;
+                margin: 0 !important;
+                padding: 10mm 10mm !important;
+                /* Standard print padding */
+                box-shadow: none !important;
+                page-break-after: always;
+            }
+
+            .content-grid {
+                /* Maintain grid but ensure it fits on page */
+                display: grid;
+                grid-template-columns: 2fr 1fr;
+                gap: 20px;
+            }
+        }
+
+        body {
+            font-family: 'Libre Baskerville', serif;
+            background-color: #e0e0e0;
+            margin: 0;
+            padding: 20px;
+            color: #111;
+        }
+
+        .page-container {
+            background-color: #fff;
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            box-sizing: border-box;
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        /* Header */
+        header {
+            text-align: center;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .logo-area {
+            border-bottom: 2px solid #000;
+            border-top: 2px solid #000;
+            padding: 10px 0;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 80px;
+            font-weight: 900;
+            margin: 0;
+            line-height: 1;
+        }
+
+        .logo-decoration {
+            font-size: 40px;
+            color: #555;
+        }
+
+        .meta-bar {
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 4px double #000;
+            padding-bottom: 5px;
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 14px;
+        }
+
+        /* Main Headline */
+        .main-headline {
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .main-headline h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 42px;
+            font-weight: 700;
+            line-height: 1.2;
+            margin: 0;
+        }
+
+        /* Content Grid */
+        .content-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 40px;
+            margin-bottom: 40px;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 40px;
+        }
+
+        /* Main Article (Left) */
+        .main-article img {
+            width: 100%;
+            height: auto;
+            filter: grayscale(20%);
+            margin-bottom: 15px;
+        }
+
+        .main-article .intro {
+            font-weight: 700;
+            font-size: 18px;
+            margin-bottom: 15px;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .main-article .body-text {
+            font-size: 16px;
+            line-height: 1.6;
+            column-count: 2;
+            column-gap: 20px;
+            text-align: justify;
+        }
+
+        /* Excerpt specific styling for front page */
+        .main-article .excerpt-text {
+            font-size: 16px;
+            line-height: 1.6;
+            column-count: 2;
+            column-gap: 20px;
+            text-align: justify;
+        }
+
+        .main-article .quote {
+            font-style: italic;
+            font-size: 20px;
+            border-left: 3px solid var(--accent-color);
+            padding-left: 15px;
+            margin: 20px 0;
+            color: #444;
+        }
+
+        /* Sidebar Article (Right) */
+        .sidebar-article {
+            border-left: 1px solid #eee;
+            padding-left: 30px;
+        }
+
+        .sidebar-article .author {
+            font-family: 'Playfair Display', serif;
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        .sidebar-article h2 {
+            font-family: 'Inter', sans-serif;
+            font-size: 20px;
+            font-weight: 600;
+            margin-top: 0;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .sidebar-article .body-text {
+            font-size: 16px;
+            line-height: 1.5;
+            text-align: justify;
+        }
+
+        .sidebar-article img.author-img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            float: right;
+            margin-left: 15px;
+            margin-bottom: 15px;
+            filter: grayscale(100%);
+        }
+
+        .sidebar-article img.article-img {
+            width: 100%;
+            height: auto;
+            margin-top: 20px;
+            filter: grayscale(100%);
+        }
+
+        /* Bottom Section */
+        .bottom-section {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        .bottom-article {
+            border-right: 1px solid #eee;
+            padding-right: 20px;
+        }
+
+        .bottom-article:last-child {
+            border-right: none;
+            padding-right: 0;
+        }
+
+        .bottom-article .author {
+            font-weight: 700;
+            font-size: 16px;
+            font-family: 'Inter', sans-serif;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+            display: block;
+            border-bottom: 1px solid #000;
+            padding-bottom: 2px;
+            display: inline-block;
+        }
+
+        .bottom-article h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 18px;
+            margin: 10px 0;
+            line-height: 1.3;
+        }
+
+        .bottom-article p {
+            font-size: 14px;
+            line-height: 1.5;
+            text-align: justify;
+            color: #333;
+        }
+
+        .bottom-article img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            float: right;
+            margin-left: 10px;
+            filter: grayscale(100%);
+        }
+
+        /* Inner Pages */
+        .inner-page-header {
+            border-bottom: 1px solid #ccc;
+            margin-bottom: 30px;
+            padding-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            color: #666;
+            font-family: 'Inter', sans-serif;
+            font-size: 12px;
+            text-transform: uppercase;
+        }
+
+        .article-full {
+            margin-bottom: 50px;
+        }
+
+        .article-full h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+
+        .article-full .meta {
+            font-family: 'Inter', sans-serif;
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+
+        .article-full .content {
+            font-size: 18px;
+            line-height: 1.8;
+            max-width: 1000px;
+            margin: 0 auto;
+            text-align: justify;
+        }
+
+        .article-full .content p {
+            margin-bottom: 20px;
+        }
+
+        .article-full .content img {
+            max-width: 100%;
+            height: auto;
+            margin: 20px 0;
+        }
+
+        /* Print Optimization */
+        @media print {
+            body {
+                background: none;
+                padding: 0;
+            }
+
+            .page-container {
+                box-shadow: none;
+                margin: 0;
+                width: 100%;
+                max-width: none;
+                page-break-after: always;
+            }
+
+            .page-container:last-child {
+                page-break-after: auto;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Front Page -->
+    <div class="page-container">
+        <header>
+            <div class="logo-area">
+                <span class="logo-decoration">~</span>
+                <h1 class="logo">daktilo2</h1>
+                <span class="logo-decoration">~</span>
+            </div>
+            <div class="meta-bar">
+                <span>Pazar Eki</span>
+                <span>{{ issue_date }}</span>
+                <span>Sayı {{ issue_number }}</span>
+            </div>
+        </header>
+
+        <div class="main-headline">
+            <h1>{{ headline.custom_title if headline.custom_title else headline.title }}</h1>
+        </div>
+
+        <div class="content-grid">
+            <div class="main-article">
+                {% if headline.image_url %}
+                <img src="{{ headline.image_url }}" alt="Main Article Image">
+                {% endif %}
+                <div class="intro">
+                    {{ headline.intro }}
+                </div>
+                <!-- Only showing excerpt/intro on front page -->
+                <div class="excerpt-text">
+                    <p>
+                        "Türkiye’de araştırmacı gazeteciliğin en büyük eksikliklerinden birinin ‘cross-border’ yani
+                        sınırları aşan ortak araştırmalar olduğunu düşünüyorum. Komşularımıza baktığımızda inanılmaz bir
+                        haber potansiyeli olduğu görülüyor. Suriye’den Irak’a, Gürcistan’dan Balkanlar’a kadar Türkiye
+                        ile doğrudan bağlantılı ya da birbirine değen meseleler var. Bence bu nedenle uluslararası
+                        mesleki dayanışma çok kritik. Neticede bir fanusun içinde yaşamıyoruz. Meselelerin siyasi,
+                        ekonomik ya da kriminal yanları çoğu zaman tek bir ülkeyle sınırlı değil."
+                    </p>
+                    <p>
+                        "Travmayı yeniden üretmeden bu tür ağır hikâyeleri aktarmak aslında imkânsız değil, yeter ki
+                        çocuk odaklı söylemi doğru kurabilelim. Gazetecinin görevi, yaşanan istismarı
+                        sansasyonelleştirmek değil, çocuğun haklarını merkezde tutarak yapısal sorunları görünür kılmak.
+                        Olayın detaylarında kaybolmamaya özen göstermek lazım. Sistemdeki açıkları ortaya koymak ve
+                        yaşanan ihlalleri anlatmak kamu yararı için gerekli."
+                    </p>
+                </div>
+            </div>
+
+            <div class="sidebar-article">
+                <!-- Author image removed -->
+                <span class="author">{{ sidebar.author }}</span>
+                <h2>{{ sidebar.title }}</h2>
+                <div class="body-text">
+                    {{ sidebar.excerpt | safe }}
+                </div>
+                {% if sidebar.image_url %}
+                <img src="{{ sidebar.image_url }}" alt="Sidebar Image" class="article-img">
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="bottom-section">
+            {% for article in bottom_articles %}
+            <div class="bottom-article">
+                <!-- Author image removed -->
+                <span class="author">{{ article.author }}</span>
+                <h3>{{ article.title }}</h3>
+                <p>{{ article.excerpt }}</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Inner Pages -->
+    {% for article in full_articles %}
+    <div class="page-container">
+        <div class="inner-page-header">
+            <span>daktilo2</span>
+            <span>{{ article.date }}</span>
+        </div>
+
+        <div class="article-full">
+            <h1>{{ article.title }}</h1>
+            <div class="meta">
+                Yazar: <strong>{{ article.author }}</strong>
+            </div>
+
+            {% if article.image_url %}
+            <img src="{{ article.image_url }}"
+                style="width:100%; max-height:400px; object-fit:cover; margin-bottom:30px;">
+            {% endif %}
+
+            <div class="content">
+                {{ article.content | safe }}
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+
+</body>
+
+</html>
